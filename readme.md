@@ -728,10 +728,10 @@ media queries, to cover differences for different viewport sizes.
 So, we have four groups of descriptions, that we have to order in a helpful way,
 due to the sequentially parsed nature of CSS:
 
-1. description of the element itself (CSS properties)
-2. descriptions of states (variants, interaction states)
-3. descriptions of descendants (in order of rendering, including pseudo-elements)
-4. descriptions of responsive changes (using @media-queries)
+1. description of the **element itself** (CSS properties)
+2. descriptions of **states** (variants, interaction states)
+3. descriptions of **descendants** (in order of rendering, including pseudo-elements)
+4. descriptions of **responsive changes** (using @media-queries)
 
 Applying this to our primary button example, would look like this
 (with every descendant repeating the order for itself):
@@ -797,8 +797,8 @@ Applying this to our primary button example, would look like this
 Hm, repeating media queries seems tedious and could be a performance problem as
 well, right? Let's **redefine point four**, to minimize repetition of `@media`:
 
-4. descriptions of responsive changes (using @media-queries, only for landmark,
-   containing descendants)
+4. descriptions of **responsive changes** (using @media-queries, only for
+   landmark, containing descendants)
 
 Now, our example would become this:
 
@@ -1055,7 +1055,7 @@ Let's see:
     left: 10vw;
     
     /* transformation properties */
-	  transform-origin: left center;
+    transform-origin: left center;
     transform: scale(1.1) rotate(45deg);
    
     /* box model properties */
@@ -1339,11 +1339,11 @@ of descendants without specificity problems (and without screwing up readability
 But that changes our hierarchy order, doesn't it? It does. And it looks a little
 wild, but bear with me:
 
-1. description of the element itself
-2. descriptions of states (if no descendants are affected)
-3. descriptions of descendants (in order of rendering)
-4. descriptions of states (only inside landmark, if descendants are affected)
-5. descriptions of responsive changes (only inside landmark. containing descendants)
+1. description of **the element itself**
+2. descriptions of **states** (if no descendants are affected)
+3. descriptions of **descendants** (in order of rendering)
+4. descriptions of **states** (only inside landmark, if descendants are affected)
+5. descriptions of **responsive changes** (only inside landmark. containing descendants)
 
 What happened here? Either a state is simple and only changes the base
 definition, or it includes the descendants as well. In the first case, the
