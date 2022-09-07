@@ -192,6 +192,66 @@ So there are three aspects to a styling system, we have to cover:
   the responsive changes, which should all be included in one @media-rule),
   thereby grouping the definitions of each logical block
 
+Example:
+
+```css
+.organism-tokyo-tower {
+    padding: 0.5rem;
+    border: 3px solid palevioletred;
+}
+
+.organism-tokyo-tower:hover {
+    border-color: mediumvioletred;
+}
+
+.organism-tokyo-tower[disabled] {
+    opacity: 0.5;
+    
+    pointer-events: none;
+}
+
+.organism-tokyo-tower.variant--at-night {
+    border-width: 1px;
+}
+
+.organism-tokyo-tower .antenna {
+    height: 10vh;
+    
+    background-color: darkred;
+}
+
+.organism-tokyo-tower:hover .antenna {
+    background-color: orangered;
+}
+
+.organism-tokyo-tower .elevator > .button {
+    font-size: small;
+    color: cornflowerblue;
+}
+
+.organism-tokyo-tower:hover .elevator > .button {
+    color: mediumvioletred;
+}
+
+.organism-tokyo-tower.variant--at-night .elevator > .button {
+    font-weight: bold;
+}
+
+@media only screen and (min-width: 640px){  
+    .organism-tokyo-tower {
+        padding: 1rem;
+    }
+    
+    .organism-tokyo-tower .elevator > .button {
+        font-size: medium;
+    }
+    
+    .organism-tokyo-tower.variant--at-night .elevator > .button {
+        font-weight: bolder;
+    }
+}
+```
+
 
 ### Description
 
@@ -205,10 +265,10 @@ So there are three aspects to a styling system, we have to cover:
 - things that are declared together should be **ordered logically**
 - only use directional **shorthands** and those that are unambiguous as well as short
 
-A full example:
+Example:
 
 ```css
-.landmark {
+.organism-tokyo-tower {
     /* technical properties (non-visual definitions) */
     /* counter needs to come first, so following props can use it */
     counter-reset: landmark-count;
