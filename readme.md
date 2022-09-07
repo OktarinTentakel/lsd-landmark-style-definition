@@ -163,7 +163,7 @@ So there are three aspects to a styling system, we have to cover:
   a `brown-trunk-with-green-stuff-on-top-20-meters-high`)
 - especially **avoid all visual qualifications** in names like "left", "big" or
   "brown", otherwise, changing styles suddenly means changing class names
-- all selectors, including landmark classes, are written as lowercase slugs
+- all selectors, including landmark classes, are written as **lowercase slugs**
   (`atom-primary-button` and not `AtomPrimaryButton`); HTML and CSS are not
   JS. Camel-cased names are a programming concept, which, like case-sensitive
   file names (Win/Mac vs. Linux), are error-prone, depending on the context
