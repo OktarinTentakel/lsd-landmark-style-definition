@@ -1310,7 +1310,7 @@ using SCSS:
         pointer-events: none;
     }
     
-    &.variant--important {
+    &.is__important {
         border-width: 3px;
     }
     
@@ -1331,7 +1331,7 @@ using SCSS:
         color: mediumvioletred;
     }
     
-    &.variant--important .caption {
+    &.is__important .caption {
         font-weight: bold;
     }
     
@@ -1343,7 +1343,7 @@ using SCSS:
             font-size: medium;
         }
         
-        &.variant--important .caption {
+        &.is__important .caption {
             font-weight: bolder;
         }
     }
@@ -1409,7 +1409,7 @@ some blank lines to group the parts of the definition a little better:
     }
     
     
-    &.variant--important {
+    &.is__important {
         border-width: 3px;
         
         .caption {
@@ -1426,7 +1426,7 @@ some blank lines to group the parts of the definition a little better:
             font-size: medium;
         }
         
-        &.variant--important .caption {
+        &.is__important .caption {
             font-weight: bolder;
         }
     }
