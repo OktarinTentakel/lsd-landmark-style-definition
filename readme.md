@@ -25,6 +25,8 @@
     * [The Whole Story (About the Bear)](#the-whole-story--about-the-bear-)
     * [A Word on Shorthand Properties](#a-word-on-shorthand-properties)
   * ["Variance" or "Angry Ice Bears"](#-variance--or--angry-ice-bears-)
+    * [Problems with Representing Variants and Statuses](#problems-with-representing-variants-and-statuses)
+    * [Divide and Conquer](#divide-and-conquer)
   * [Q&A - The Remaining Elephants in the Room](#qa---the-remaining-elephants-in-the-room)
       * [LSD seems to primarily use classes, what about IDs?](#lsd-seems-to-primarily-use-classes-what-about-ids)
       * [CSS without nesting is cumbersome, why don't we use a preprocessor?](#css-without-nesting-is-cumbersome-why-dont-we-use-a-preprocessor)
