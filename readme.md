@@ -80,19 +80,21 @@ thinks about elements and approaches describing them.
 
 ### BEM
 
-The granddaddy of styling systems would be **BEM**. For me, the pro of BEM is a
-very clear and strict rule of block levels and modifiers, combined with a formal
-style of notation. I feel neutral about its idea of keeping specificity always
-at 10, by only using a single class for everything, simply because I never
-really struggled with keeping track of specificity and seldom found myself in a
-situation, where I wanted to override something, but could not beat the
-specificity of the selector (a straight-forward structure helps immensely with
-this). The cons of BEM, for me, are constant repetition in classes and selectors
-(which you can minimize with a pre-/post-processor), the lack of in-between
-steps between a block and an embedded element and the fact, that we completely
-circumvent a basic system of CSS (namely specificity), by ignoring things like
-multiple classes and anything apart from classes. BEM, to me, feels lengthy,
-imprecise and over-simplistic.
+The granddaddy of styling systems would be BEM. For me, the **pro of BEM is a
+very clear and strict rule of block levels and modifiers**, combined with a
+formal style of notation.
+
+I feel **neutral about its idea of keeping specificity always at 10**, by only
+using a single class for everything, simply because I never really struggled
+with keeping track of specificity and seldom found myself in a situation, where
+I wanted to override something, but could not beat the specificity of the
+selector (a straight-forward structure helps immensely with this).
+
+The **cons of BEM, for me, are constant repetition** in classes and selectors,
+the lack of in-between steps between a block and an embedded element and the
+fact, that we completely circumvent a basic system of CSS (namely specificity),
+by ignoring things like multiple classes and anything apart from classes.
+BEM, to me, feels lengthy, imprecise and over-simplistic.
 
 There are many others, which are not known by a wide audience. I've read several
 of them, but nothing really caught on for me.
@@ -100,17 +102,20 @@ of them, but nothing really caught on for me.
 
 ### Utility-First
 
-Lately, the idea to **"utility first"** systems like Tailwind caught on. There
+Lately, the idea to "utility first" systems like Tailwind caught on. There
 is not much positive I can say about these, apart from the fact, that they are
-(too) easy to use. They basic thought behind these systems is that someone
-"does not like CSS" or does not understand it, but he or she wants/needs to
-develop an app and just wants "things to look right". "Utility first" systems
-undermine a basic idea of stylesheets, which is, that structure and semantics
-are separate from presentation. HTML defines the "things" we have, JS defines
-what these things "can do" and lastly CSS defines "how it looks". By putting
-utility classes into HTML, we do not describe what we have anymore, but
-essentially put inline styles into markup. This lack of separation is not my
-idea of frontend development.
+(too) easy to use.
+
+The basic thought behind these systems is that someone "does not like CSS" or
+does not understand it, but he or she wants/needs to develop an app and just
+wants "things to look right". "Utility first" systems **undermine a basic idea
+of stylesheets, which is, that structure and semantics are separate from
+presentation**.
+
+HTML defines the "things" we have, JS defines what these things "can do" and
+lastly CSS defines "how it looks". By putting utility classes into HTML, we do
+not describe what we have anymore, but essentially put inline styles into
+markup. This lack of separation is not my idea of frontend development.
 
 
 
@@ -210,7 +215,7 @@ Example:
     pointer-events: none;
 }
 
-.organism-tokyo-tower.variant--at-night {
+.organism-tokyo-tower.is__at-night {
     border-width: 1px;
 }
 
@@ -233,7 +238,7 @@ Example:
     color: mediumvioletred;
 }
 
-.organism-tokyo-tower.variant--at-night .elevator > .button {
+.organism-tokyo-tower.is__at-night .elevator > .button {
     font-weight: bold;
 }
 
@@ -246,7 +251,7 @@ Example:
         font-size: medium;
     }
     
-    .organism-tokyo-tower.variant--at-night .elevator > .button {
+    .organism-tokyo-tower.is__at-night .elevator > .button {
         font-weight: bolder;
     }
 }
@@ -354,28 +359,28 @@ Example:
   **not necessarily have a visual representation**
   (an element being "highlighted" is a variant, while having an "error" is a status)
 - variants are represented by **additional variant-classes**
-  (`variant--highlighted`) _after_ the base class
+  (`is__highlighted`, `has__more-information`) _after_ the base class
   (which _always_ comes first in the HTML-class-attribute)
-- statuses are **represented by data-attributes** (`data-status--error`),
-  which are not only easily selectable with CSS, but also offer the possibility
-  of having different values (allowing us to either check for existence or a
-  specific value based on only one definition)
+- statuses are **represented by data-attributes** (`data-has__error`,
+  `data-is__selected-by-user`), which are not only easily selectable with CSS,
+  but also offer the possibility of having different values (allowing us to
+  either check for existence or a specific value based on only one definition)
 
 Example:
 
 ```html
 <div
-    class="organism-tokyo-tower variant--at-night"
-    data-status--closed="until dawn"
+    class="organism-tokyo-tower is__at-night"
+    data-is__closed="until dawn"
 ></div>
 ```
 
 ```css
 /* target all statuses */
-.organism-tokyo-tower[data-status--closed] {}
+.organism-tokyo-tower[data-is__closed] {}
 
 /* target specifically */
-.organism-tokyo-tower.variant--at-night[data-status--closed='until dawn'] {}
+.organism-tokyo-tower.is__at-night[data-is__closed='until dawn'] {}
 ```
 
 
@@ -1152,6 +1157,9 @@ of the day. But an ice bear may also be angry, showing teeth, which is
 the same** and should not be treated as such, not while handling bears and also
 not while styling elements.
 
+
+### Problems with Representing Variants and Statuses
+
 We already established, that the **base element selectors** are simple
 CSS-classes, with the landmark class having a special prefix. All these
 selectors should be declared as slugs and be concise.
@@ -1183,6 +1191,9 @@ in addition to the specific one, like
 
 Again, this gets **convoluted and lengthy** pretty quickly, doesn't it?
 
+
+### Divide and Conquer
+
 Let's see how this changes if we step away from the "classes only approach" and
 do this **the LSD way**:
 
@@ -1191,8 +1202,8 @@ do this **the LSD way**:
     type="checkbox"
     name="newsletter"
     value="yes please"
-    class="variant--inverted"
-    data-status--error="required"
+    class="is__inverted"
+    data-has__error="required"
 />
 ```
 
@@ -1204,25 +1215,32 @@ even clearer and better structured than before.
 
 ```css
 /* style any error for all variants */
-input[type='checkbox'][data-status--error] {}
+input[type='checkbox'][data-has__error] {}
 
 /* style required error only for inverted checkboxes */
-input[type='checkbox'].variant--inverted[data-status--error='required'] {}
+input[type='checkbox'].is__inverted[data-has__error='required'] {}
 ```
 
-I'm using prefixes with **double hyphens** here, to introduce a clear difference
-between a descriptive element class and a variant, using the double hyphen to
-avoid collisions with other applications a frameworks and separate these
-definitions visually.
+Using double underscores here has several reasons:
 
-If you think "variant" and "status" are too verbose, you are free to find
-something shorter (within the allowed constraints of css classes, which state,
-that the selector must start with a letter, unless you are a vendor, which
-may be followed by any combination of letters, hyphens and underscores),
-but the more I thought about this, the clearer it became, that the verbose
-version is the clearest, most readable. Going for something like `v--inverted`,
-is enigmatic to anyone not familiar with this composition and additionally,
-this looks like something from or for a Vue-package.
+1. we can use the same prefix style in both classes and attributes, which is
+   not that easy, since the usable characters for both are quite limited
+2. underscores clearly separate a prefix from a word break
+   (`is__highlight-with-a-twist`)
+3. underscores in data attributes have the nice effect, that the prefix does
+   not automatically get camel-cased in `element.dataset`, so `data-has__error`
+   stays `{has__error : "required"}` instead of becoming `hasError`, while
+   attributes with hyphenated words behave as expected
+   (`data-has__important-error` becomes `has__importantError`)
+4. double underscores prevent collisions with other classes/attributes, other
+   frameworks and are nicely searchable
+
+"is" and "has" are charming prefixes, because they are short and concise.
+Usually a variant is something an element "is" permanently, while a status is
+usually something an element "has" for a certain time. Sometimes this idea does
+not work language-wise, but one of these prefixes should always fit.
+(`data-has__closed` makes no sense, but `data-is__closed` works;
+`.is__more_information` makes no sense, but `has__more-information` works)
 
 
 
