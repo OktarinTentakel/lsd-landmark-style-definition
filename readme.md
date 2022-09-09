@@ -182,19 +182,19 @@ So there are three aspects to a styling system, we have to cover:
   inside the markup (component/subcomponent, block/element,
   organism/molecule/atom)
 - a landmark class is **as specific as it needs to be**, but not over-specific
-  (an `atom-primary-button` is mostly likely not an
+  (an `atom-primary-button` is most likely not an
   `atom-contact-form-primary-button`, since buttons do not tend to change
   their nature as soon as they are part of a form)
 - a selector should not have more than **three in-between levels** below the
   landmark class before hitting the targeted descendant
   (`.organism-page-header .burger-menu .links .group a`), if you need more,
-  check if you can identify new landmarks in the ancestors structure
+  check if you can identify new landmarks in the ancestor's structure
 - **order your CSS rules** for a landmark element like this, to describe it
   in its entirety in an orderly and readable fashion:
   1. the element itself (CSS properties)
-  2. element states (variants, interaction states)
+  2. element states (variants, statuses, interaction states)
   3. descendants (in order of rendering, including pseudo-elements)
-  4. responsive changes (also containing descendants in @media-rule)
+  4. responsive changes (@media-rules, containing descendants as well)
 - this **order repeats for each descendant** element in the landmark (except for
   the responsive changes, which should all be included in one @media-rule),
   thereby grouping the definitions of each logical block
@@ -579,7 +579,7 @@ The template gets bloated and the CSS is lacking information.
 Let's redefine this according to LSD:
 
 ```html
-<aside class="cross-content-teaser">
+<aside class="organism-cross-content-teaser">
     <div class="head">
         <a class="cta" href="">Go here!</a>
         <a class="cta" href="">Go there!</a>
@@ -592,11 +592,11 @@ Let's redefine this according to LSD:
 ```
 
 ```css
-.cross-content-teaser {
+.organism-cross-content-teaser {
     position: relative;
 }
 
-.cross-content-teaser > .head {
+.organism-cross-content-teaser > .head {
     overflow: hidden;
    
     position: absolute;
@@ -604,13 +604,13 @@ Let's redefine this according to LSD:
     right: 0;
 }
 
-.cross-content-teaser > .head .cta {
+.organism-cross-content-teaser > .head .cta {
     float: right;
 
     margin: 0;
 }
 
-.cross-content-teaser > .foot .cta {
+.organism-cross-content-teaser > .foot .cta {
     display: block;
 
     margin: 0 auto;
@@ -624,7 +624,7 @@ loses ~50% code length through this change. So, what's the downside to this?
 BEM-classes always have a specificity of 10, while the LSD selectors here have a
 specificity of 10, 20 or 30 (depending on the number of classes). This means,
 if we want to override the definition later, we have to match the selector. You
-can, of course, easily achieve this, by using the same selector at a later
+can, of course, easily achieve this, by **using the same selector** at a later
 point, the only real difference here being, that BEM might offer code completion
 for CSS classes in your IDE here, while you really have to copy the selector
 using LSD. I do not really see problem here, since overwriting stuff is not a
@@ -687,7 +687,7 @@ Interestingly, while this **prevents name collisions** on a technical level,
 this stays confusing semantically, since the names do not tell us anything about
 the actual difference in purpose here.
 
-So, the full idea of a landmark nam (to be used as the root selector), is to
+So, the full idea of a landmark name (to be used as the root selector), is to
 provide a structural prefix as well as **becoming increasingly more specific**,
 the more uncommon the use-case gets, without getting over specific. While the
 cross-content teaser on the blog post might be the usual case, we have in mind
@@ -736,7 +736,7 @@ So, we have four groups of descriptions, that we have to order in a helpful way,
 due to the sequentially parsed nature of CSS:
 
 1. description of the **element itself** (CSS properties)
-2. descriptions of **states** (variants, interaction states)
+2. descriptions of **states** (variants, statuses, interaction states)
 3. descriptions of **descendants** (in order of rendering, including pseudo-elements)
 4. descriptions of **responsive changes** (using @media-queries)
 
@@ -983,8 +983,8 @@ mentioned above follows a different logic, some, again, come from importance,
 some follow principles, that are baked into CSS:
 
 - **technical properties**
-  +let's first take care of the element's setup, before doing anything else
-  +`counter` definitions should come first, because following props might use them
+  + let's first take care of the element's setup, before doing anything else
+  + `counter` definitions should come first, because following props might use them
 - **display properties**
   + `display` is the most important property of all, it should always come first
   + anything belonging to the display mode should follow (`flex-direction` e.g)
@@ -1209,9 +1209,9 @@ do this **the LSD way**:
 />
 ```
 
-Now we have a clear distinction between a variant and a state and what's even
-more important, like this, a state does not signify different styling
-automatically. Additionally, we have **flexibility with the state's values**,
+Now we have a clear distinction between a variant and a status and what's even
+more important, like this, a status does not signify different styling
+automatically. Additionally, we have **flexibility with the values of the status**,
 while keeping the possibility to construct well-formed selectors, which become
 even clearer and better structured than before.
 
@@ -1223,21 +1223,21 @@ input[type='checkbox'][data-has__error] {}
 input[type='checkbox'].is__inverted[data-has__error='required'] {}
 ```
 
-Using double underscores here has several reasons:
+Using **double underscores** here has several reasons:
 
-1. we can use the same prefix style in both classes and attributes, which is
+1. we can use the **same prefix style** in both classes and attributes, which is
    not that easy, since the usable characters for both are quite limited
-2. underscores clearly separate a prefix from a word break
+2. underscores **clearly separate** a prefix from a word break
    (`is__highlight-with-a-twist`)
-3. underscores in data attributes have the nice effect, that the prefix does
-   not automatically get camel-cased in `element.dataset`, so `data-has__error`
+3. underscores in data attributes have the nice effect, that the **prefix does
+   not automatically get camel-cased** in `element.dataset`, so `data-has__error`
    stays `{has__error : "required"}` instead of becoming `hasError`, while
    attributes with hyphenated words behave as expected
    (`data-has__important-error` becomes `has__importantError`)
-4. double underscores prevent collisions with other classes/attributes, other
+4. double underscores **prevent collisions** with other classes/attributes, other
    frameworks and are nicely searchable
 
-"is" and "has" are charming prefixes, because they are short and concise.
+"is" and "has" are charming prefixes, because they are **short and concise**.
 Usually a variant is something an element "is" permanently, while a status is
 usually something an element "has" for a certain time. Sometimes this idea does
 not work language-wise, but one of these prefixes should always fit.
@@ -1253,7 +1253,8 @@ not work language-wise, but one of these prefixes should always fit.
 IDs took an interesting turn during the development of HTML and CSS. While they
 started out as an easily accessible identifier for elements, that you can style
 with a high specificity and access easily in JS, the rise of modular components
-and things like `querySelector` removed much of the proposed helpfulness of IDs.
+and things like `querySelector` **removed much of the proposed helpfulness**
+of IDs.
 
 In a way, IDs are a precursor of landmark selectors for static environments,
 which are **not very helpful anymore**, if we cannot be sure things exists only
@@ -1269,8 +1270,8 @@ uses for IDs in HTML** like anchors and form label "for"-targets. You could also
 use them to hold generated, globally unique identifiers, but I'd generally
 not recommend to use them for styling anymore.
 
-The only helpful ID-selector use I could think of, is to use an ID as a root
-selector, to avoid collisions of landmark selectors, where multiple
+The only helpful ID-selector use I could think of, is to use an ID **as a root
+selector**, to avoid collisions of landmark selectors, where multiple
 contexts/projects meet in one document. Let's say you follow an "island"
 approach, where one project integrates with another inline (cookie banner inside
 a host page for example). In that case it might be a wise decision to define a
@@ -1357,7 +1358,7 @@ also define effects of element states in a single place, but this requires the
 state to be defined _after_ the descendants, so we are able to overwrite styles
 of descendants without specificity problems (and without screwing up readability).
 But that changes our hierarchy order, doesn't it? It does. And it looks a little
-wild, but bear with me:
+wild, but bear with me (no pun intended):
 
 1. description of **the element itself**
 2. descriptions of **states** (if no descendants are affected)
