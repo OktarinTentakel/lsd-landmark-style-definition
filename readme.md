@@ -38,8 +38,8 @@
 
 The **problem with CSS** (and all frontend dialects in that regard) is, that it
 requires a lot of discipline and very well formulated implementation strategies
-to prevent stylesheets to descend into utter chaos, because CSS, by itself, does
-not force any constraints or structure on you, but only formulates some very
+to prevent stylesheets from descending into utter chaos, because CSS, by itself,
+does not force any constraints or structure on you, but only formulates some very
 basic rules like sequential parsing, specificity and selectors. The rest is up
 to you.
 
@@ -58,7 +58,7 @@ That's where **styling systems** come into the picture. A styling system is
 nothing but a set of rules about how to structure website parts and style them
 in a consistent and robust way, that survives relevant time spans and several
 rounds of changes and refactoring without breaking anything essential. So a
-styling system is essentially just a list of formalized ideas on how to write
+styling system is, more or less, just a list of formalized ideas on how to write
 styles, to prevent future chaos and be able to find and understand things once
 everything has been finished. So basically what the inventors of CSS expect
 every single one of us to do before tackling any larger project, but what most
@@ -98,13 +98,13 @@ fact, that we completely circumvent a basic system of CSS (namely specificity),
 by ignoring things like multiple classes and anything apart from classes.
 BEM, to me, feels lengthy, imprecise and over-simplistic.
 
-There are many others, which are not known by a wide audience. I've read several
+There are many others, which are not known to a wide audience. I've read several
 of them, but nothing really caught on for me.
 
 
-### Utility-First
+### Utility First
 
-Lately, the idea to "utility first" systems like Tailwind caught on. There
+Lately, the idea to "utility first" systems like "Tailwind" caught on. There
 is not much positive I can say about these, apart from the fact, that they are
 (too) easy to use.
 
@@ -177,7 +177,7 @@ So there are three aspects to a styling system, we have to cover:
   they are interpreted by; in both cases: just use `[a-z]` and `-`
 - all definitions for that element and its descendants (excluding other
   landmarks) **start with the landmark class**, thereby automatically avoiding
-  naming collisions
+  naming collisions with elements in other contexts of the same selector
 - a landmark class **starts with a prefix**, defining the hierarchical level
   inside the markup (component/subcomponent, block/element,
   organism/molecule/atom)
@@ -434,12 +434,14 @@ So, what do we have here? We have the landmark, which is our entry into the
 selector, from which we work our way downward. This landmark needs to have
 a globally unique selector, which may never ever appear in another context.
 After that, we have three **location steps**, that describe the inner structure
-of the landmark, and, at last, the element we are searching for. Whether these
-location steps need a precise or loose child/descendant definition is a question
-of how big a risk exists, that a child selector might also be a descendant
-further down the line (scoped styles circumvent this problem). To be honest, our
-example above has one location step more than ideal, but we are using a
-worst-case/maximum-tolerance example here.
+of the landmark, and, at last, the element we are searching for.
+
+Whether these location steps need a precise or loose child/descendant definition
+is a question of how big a risk exists, that a child selector might also be a
+descendant further down the line (scoped styles circumvent this problem).
+
+And, to be honest, our example above has one location step more than ideal, but
+we are using a worst-case/maximum-tolerance example here.
 
 So, what would our abstract landmark-based selector look like?
 
@@ -517,7 +519,7 @@ Oh my, this is getting lengthy.
 
 Let's additionally assume we also want to position the top CTAs differently,
 and we need a container for this. Now we do not have the problem anymore, that
-we cannot differentiate the top from the bottom ctas anymore, right? Wrong.
+we cannot differentiate the top from the bottom CTAs anymore, right? Wrong.
 BEM usually uses _one_ class alone and does not work with descendant selectors,
 so we would need special positional modifiers for the CTAs as well.
 
@@ -626,10 +628,10 @@ specificity of 10, 20 or 30 (depending on the number of classes). This means,
 if we want to override the definition later, we have to match the selector. You
 can, of course, easily achieve this, by **using the same selector** at a later
 point, the only real difference here being, that BEM might offer code completion
-for CSS classes in your IDE here, while you really have to copy the selector
+for CSS classes in your IDE here, while you really have to copy the selector when
 using LSD. I do not really see problem here, since overwriting stuff is not a
-common task (and it shouldn't). It even is something you should really think
-about, before doing it anyway.
+common task (and it shouldn't be). It even is something you should really think
+about, before doing it, anyway.
 
 
 ### Strategies for Naming a Landmark
@@ -689,7 +691,7 @@ the actual difference in purpose here.
 
 So, the full idea of a landmark name (to be used as the root selector), is to
 provide a structural prefix as well as **becoming increasingly more specific**,
-the more uncommon the use-case gets, without getting over specific. While the
+the more uncommon the use-case gets, without getting over-specific. While the
 cross-content teaser on the blog post might be the usual case, we have in mind
 when we imagine such a teaser, the initial concept is a little unusual, since we
 are putting a singular large teaser on a page. In this case, I'd rather name the
@@ -715,7 +717,7 @@ definitions of all elements that constitute the landmark as a whole. We have the
 landmark selector itself, sure, but we also have elements inside. And those
 elements may have different classes, communicating different states. There might
 also be pseudo-elements or interaction definitions like `:hover` and `:focus`.
-What's a good approach here?
+So, what's a good approach here?
 
 First of all, let's **differentiate** between actual descendants, constituting a
 hierarchical relationship, and additional definitions of the same element:
@@ -866,7 +868,7 @@ Now, our example would become this:
 ```
 
 With this done, we have a set of definitions, covering all aspects of the
-landmark in a human-parsable way, by closely grouping related stuff, keeping
+landmark in a human-parsable way, by closely grouping related stuff and keeping
 the natural reading direction of a layout.
 
 
@@ -912,7 +914,7 @@ which is astonishing.
 
 Who are you writing CSS code for? Yourself, other developers and the browser
 engine (exactly in that order). And what do the **human parts of that audience**
-need to understand the code and quickly get to grips with meaning?
+need to understand the code and quickly get to grips with its meaning?
 
 A structured **"story"**.
 
@@ -1023,8 +1025,8 @@ some follow principles, that are baked into CSS:
   + after that, define how it behaves
     (`background-position`, `background-size`, ...) 
 - **animation properties**
-  + animations and transitions come last, because they might touch/transform all
-    properties before
+  + animations and transitions come last, because they might touch/transition
+    all properties before
   + do not use animations and transitions in conjunction
   + do not use `transition: all`, always specify exactly what should happen
   + start `animation` definitions with the animation itself, then the rendering
@@ -1134,7 +1136,7 @@ So, either do not use shorthand properties at all or follow this rule of thumb:
 
 Following this rule, `flex: 1 0 100%` is out, because the first two parameters
 are not clear, `background: lightblue url('img.gif') no-repeat fixed center`
-is out because the list of parameters is too long and confusing (there are
+is out because the list of parameters is too long and confusing (and there are
 even more), but `border: 1px solid red` is okay, since the parameters are clear
 and the list is short.
 
@@ -1149,7 +1151,7 @@ are jolly today.
 
 The same goes for styling: on the one hand we want to have visual variants and
 on the other hand, there are styles, that describe the difference in appearance
-**based on a status**. So, we have to deal with modifiers _and_ statuses, which
+**based on a status**. So, we have to deal with variants _and_ statuses, which
 in most other systems are treated as one and the same.
 
 If our `.bear` is an ice bear, that's a non-brown visual variant. The ice bear
@@ -1171,7 +1173,7 @@ Now, how do we define variants and statuses **additionally** to the base class?
 The best representation for variants are, due to the permanent and visual
 nature, **additional classes**, declared after the element's main class.
 
-So, what do we do with statuses, which are **not necessarily permanent** and may
+What do we do with statuses, which are **not necessarily permanent** and may
 not even have any visual effects at all? A class is the wrong choice here, since
 the fact, that a status may change the styling is a logical by-product and
 not the core concept of the status.
@@ -1184,12 +1186,12 @@ the checkbox based on the error? Does the error class really make sense in this
 case?
 
 What if we have different errors with different visual representations?
-`.checkbox-error-required` and `.checkbox-error-not-interacted`?
+`.checkbox--error-required` and `.checkbox--error-not-interacted`?
 What if we want to restyle the checkbox if there is an error, regardless which
 one occurred? In that case we'd have to write a selector like
 `[class*='.checkbox--error-']` or we'd have to introduce a general error class
 in addition to the specific one, like
-`.checkbox--error .checkbox-error-required`.
+`.checkbox--error .checkbox--error-required`.
 
 Again, this gets **convoluted and lengthy** pretty quickly, doesn't it?
 
@@ -1209,7 +1211,7 @@ do this **the LSD way**:
 />
 ```
 
-Now we have a clear distinction between a variant and a status and what's even
+Now we have a clear distinction between a variant and a status and, what's even
 more important, like this, a status does not signify different styling
 automatically. Additionally, we have **flexibility with the values of the status**,
 while keeping the possibility to construct well-formed selectors, which become
@@ -1262,8 +1264,8 @@ once on a page (because content definition in a CMS might change this at any
 time) and we got better ways to access elements than `getElementById`.
 
 Of course, if you are absolutely sure, that you have a **singleton element**,
-that only exists once, you can, of course, also define the landmark selector as
-an ID, the question is just: what do we win with this?
+that only exists once, you can also define the landmark selector as
+an ID, the question is just: what do we win by doing this?
 
 I'd strongly recommend, to restrict usage of IDs to the remaining **built-in
 uses for IDs in HTML** like anchors and form label "for"-targets. You could also
@@ -1434,9 +1436,10 @@ some blank lines to group the parts of the definition a little better:
 }
 ```
 
-If you think it too confusing, that states may go into two places, feel free to
-**split the definition** into two groups, one for the base definition and one
-for the descendants. I prefer to have every state just in one place.
+If you think it too confusing, that states may potentially appear in two places,
+feel free to **split the definition** into two groups, one for the base
+definition and one for the descendants. I prefer to have every state just in
+one place.
 
 By the way: if you are using a preprocessor anyway, also have a look at the
 other concepts, that are possible now. Like **variables, mixins and abstract
